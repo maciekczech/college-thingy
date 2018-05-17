@@ -1,47 +1,46 @@
 //
-// Created by maciek on 13.04.18.
+// Created by Maciej Czech on 13.04.18.
 //
 #include<iostream>
 
 #include "AdjacencyList.h"
 
-//ogólnie wszystkie te konstruktory są troche nieprzemyślane i podejrzewam, że mogłyby być przynajmniej dwa razy krótsze
-//ale it is what it is
 
 AdjacencyList::AdjacencyList(std::fstream &file) {
-    //ustawiam wskaźnik seek na początek pliku
+    /* setting seek "pointer" at the beggining of the file */
     file.seekg(std::ios::beg);
-    //trzecia linijka okresla typ danych wejsciowych
+    /* third line in the input file determines type of the representation that is being processed */ 
     for (int i = 0; i < 2; ++i) {
-        //pierwszy argument fstream::ignore() to najdłuższy możliwy wiersz,
-        // drugi to znak nowej lini przy którym funkcja przechodzi do kolejnego wiersza
         file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
-    //tworzenie tymczasowej zmiennej i przypisanie jej wartości spod wskaźnika seek
+    /* putting char from input file into this variable
+    * it is actually never used, but I decided to leave it as it is */
     file >> this->m_type;
 
-    /*część odpowiedzialna za zczytanie rozmiaru*/
+    /*setting size of the matrix to zero to prevent it from keeping any weird value at the beggining*/
     this->m_size = 0;
     for (int i = 0; i < 3; ++i) {
         file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
-    //liczy wielkość macierzy zliczając linijki w pliku
+    /* evaluating size of a matrix given in the input file */
     while (!file.eof()) {
         this->m_size++;
         file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
     //alokowanie pamięci dla macierzy
+    /* dynamically allocates memmory for the matrix */
     this->m_matrix = new int* [this->m_size + 1];
     for (int i = 0; i < this->m_size + 1; ++i) this->m_matrix[i] = new int [this->m_size + 1];
 
-    //ustawiam wskaźnik seek na początek pliku
+    /* setting seek on 5th line in the input file */
     file.seekg(std::ios::beg);
     for (int i = 0; i < 5; ++i) {
         file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
+    /* reading and writing the input in*/
     int x = 0, y = -1;
     std::string line;
     while (getline(file, line, ';')) {
@@ -60,13 +59,12 @@ AdjacencyList::AdjacencyList(std::fstream &file) {
             }
         }
     }
-    std::cout << "Zczytano i utworzono liste sasiedztwa: " << std::endl;
+    std::cout << "Adjacency list has been created. " << std::endl;
 }
 
 
-//konstruktor konwertujący macierz sąsiedztwa na listę sąsiedztwa
+/* converting constructor that creates object of Adjacency List out of Adjacency Matrix */
 AdjacencyList::AdjacencyList(AdjacencyMatrix &matrix) {
-    // counter potrzebny do dodawania kolejnych elementow listy we wlasciwe miejsce
     int counter;
     this->m_size = matrix.getSize();
     this->m_matrix = new int* [this->m_size];
@@ -90,7 +88,7 @@ AdjacencyList::~AdjacencyList(){
 
 void AdjacencyList::print(){
     for (int i = 0; i < m_size; i++){
-        //wskazuje wierzchołek, który sąsiaduje z kolejno wypisanymi, np.: "1: 2 3"
+        /* writes out vertex and it's neighbors in this way: "1: 2, 3" */
         std::cout << i + 1 << ": ";
         for (int j = 0; j < m_size; j++){
             if(m_matrix[i][j] != 0) std::cout << m_matrix[i][j] << " ";

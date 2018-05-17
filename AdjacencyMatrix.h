@@ -8,10 +8,10 @@
 
 #include "Representation.h"
 #include "AdjacencyList.h"
-#include "IncidencyMatrix.h"
+#include "IncidenceMatrix.h"
 
 class AdjacencyList;
-class IncidencyMatrix;
+class IncidenceMatrix;
 
 class AdjacencyMatrix : public Representation{
 public:
@@ -20,9 +20,10 @@ public:
     AdjacencyMatrix(int verticies, double probability);
     AdjacencyMatrix(std::fstream& file);
     AdjacencyMatrix(AdjacencyList& list);
-    AdjacencyMatrix(IncidencyMatrix& incidencyMatrix);
+    AdjacencyMatrix(IncidenceMatrix& IncidenceMatrix);
 
     virtual ~AdjacencyMatrix();
+    virtual void print();
 
 private:
 };

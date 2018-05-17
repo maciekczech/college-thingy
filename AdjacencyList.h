@@ -1,5 +1,5 @@
 //
-// Created by maciek on 13.04.18.
+// Created by Maciek Czech on 13.04.18.
 //
 
 #ifndef PROJEKT_1_VOL2_ADJACENCYLIST_H

@@ -2,33 +2,29 @@
 // Created by maciek on 14.04.18.
 //
 
-#include "IncidencyMatrix.h"
+#include "IncidenceMatrix.h"
 
+/* default constructors */
+IncidenceMatrix::IncidenceMatrix(){}
 
-IncidencyMatrix::IncidencyMatrix(){}
-
-IncidencyMatrix::IncidencyMatrix(int verticies, int edges){
+IncidenceMatrix::IncidenceMatrix(int verticies, int edges){
     this->m_matrix = new int* [verticies];
     for (int i = 0; i < verticies; ++i) this->m_matrix[i] = new int [edges];
 }
 
 
-IncidencyMatrix::IncidencyMatrix(std::fstream &file) {
-    //ustawiam wskaźnik seek na początek pliku
+IncidenceMatrix::IncidenceMatrix(std::fstream &file) {
+    /* setting seek "pointer" at the beggining of the file */
     file.seekg(std::ios::beg);
-    //trzecia linijka okresla typ danych wejsciowych
+    /* third line in the input file determines type of the representation that is being processed */
     for (int i = 0; i < 2; ++i) {
-        //pierwszy argument fstream::ignore() to najdłuższy możliwy wiersz,
-        // drugi to znak nowej lini przy którym funkcja przechodzi do kolejnego wiersza
         file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
-    //tworzenie tymczasowej zmiennej i przypisanie jej wartości spod wskaźnika seek
+    /*setting size of the matrix to zero to prevent it from keeping any weird value at the beggining*/
     file >> this->m_type;
 
-    /*część odpowiedzialna za zczytanie rozmiaru*/
-
-    //ustawiam wskaźnik seek na początek pliku
+    /* evaluating size of NxM matrix given in the input file */
     file.seekg(std::ios::beg);
     for (int i = 0; i < 5; ++i) {
         file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -53,17 +49,18 @@ IncidencyMatrix::IncidencyMatrix(std::fstream &file) {
     this->m_edges = edges;
 
 
-    //alokowanie pamięci dla macierzy
+	/* dynamically allocates memmory for the matrix */
     this->m_matrix = new int* [this->m_verticies + 1];
     for (int i = 0; i < this->m_verticies + 1; ++i) this->m_matrix[i] = new int [this->m_edges + 1];
 
-    //bez clear nie da się czytać tego samego pliku dwa razy
+    /* clear so I can read the same file again */
     file.clear();
-    //ustawiam wskaźnik seek na początek pliku
+
     file.seekg(std::ios::beg);
     for (int i = 0; i < 5; ++i) {
         file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
+    /* reading and writing the input in */
     int x = 0, y = 0;
     std::string line;
     while(file.good()){
@@ -80,8 +77,8 @@ IncidencyMatrix::IncidencyMatrix(std::fstream &file) {
     std::cout << "Utworzono macierz incydencji." << std::endl;
 }
 
-//konstruktor konwertujacy macierz sąsiedztwa na macierz incydencji
-IncidencyMatrix::IncidencyMatrix(AdjacencyMatrix &adjacencyMatrix) {
+/* converting constructor that creates object of Incidence out of Adjacency Matrix */
+IncidenceMatrix::IncidenceMatrix(AdjacencyMatrix &adjacencyMatrix) {
     this->m_verticies = adjacencyMatrix.getSize();
     this->m_edges = 0;
     int edge = 0;
@@ -102,8 +99,9 @@ IncidencyMatrix::IncidencyMatrix(AdjacencyMatrix &adjacencyMatrix) {
     }
 }
 
-IncidencyMatrix::IncidencyMatrix(const IncidencyMatrix& obj){
-    IncidencyMatrix temp(obj.getVerticies(), obj.getEdges());
+/* copy constructor that is never used :) */
+IncidenceMatrix::IncidenceMatrix(const IncidenceMatrix& obj){
+    IncidenceMatrix temp(obj.getVerticies(), obj.getEdges());
     for (int i = 0; i < this->m_verticies; ++i){
         for (int j = 0; i < this->m_edges; ++j){
             this->m_matrix[i][j] = obj.getElement(i, j);
@@ -113,7 +111,7 @@ IncidencyMatrix::IncidencyMatrix(const IncidencyMatrix& obj){
 
 
 
-void IncidencyMatrix::print(){
+void IncidenceMatrix::print(){
     for (int i = 0; i < this->m_verticies; i++){
         for (int j = 0; j < this->m_edges; j++){
             std::cout << this->m_matrix[i][j] << " ";
@@ -123,7 +121,7 @@ void IncidencyMatrix::print(){
 }
 
 
-IncidencyMatrix::~IncidencyMatrix() {
+IncidenceMatrix::~IncidenceMatrix() {
     if(this->m_matrix){
         for (int i = 0; i < this->m_verticies; ++i) {
             delete[] this->m_matrix[i];

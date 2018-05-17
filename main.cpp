@@ -1,13 +1,11 @@
 #include <iostream>
 
-//biblioteka do obsługi plików
 #include <fstream>
-//biblioteka do parsowania danych
 #include <sstream>
 #include <limits>
 #include "AdjacencyList.h"
 #include "AdjacencyMatrix.h"
-#include "IncidencyMatrix.h"
+#include "IncidenceMatrix.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "SFMLpart.h"
@@ -18,16 +16,17 @@ char readChar(std::fstream& file, int number);
 int main(void){
 
 
-    char choice; 		//char zczytywany z pliku określający sposób interpretacji danych wejściowych
-    std::fstream file;	//uchwyt do obsługi pliku
+    char choice; 		/* char used to keep a letter that is read from input file 
+    					* It determines a way of interpreting input data
+    					 */ 
+    std::fstream file;	
 
 
-    //Otwieranie pliku
+    /* opening file */
     file.open("input.dat");
-    if(file.good())	{std::cout << "Pomyślnie otwarto plik" << std::endl;}
-    else 			{std::cout << "Nie udało się otworzyć pliku" << std::endl; return 0;}
+    if(file.good())	{std::cout << "File was open successfully. " << std::endl;}
+    else 			{std::cout << "Couldn't open the file. " << std::endl; return 0;}
 
-    //zczytywanie literki
     choice = readChar(file, 3);
 
 
@@ -40,21 +39,21 @@ int main(void){
             AdjacencyMatrix adjacencyMatrixFromList(adjacencyList);
             adjacencyMatrixFromList.print();
             std::cout << "\nMacierz incydencji dla zadanej macierzy sąsiedztwa: " << std::endl;
-            IncidencyMatrix incidencyMatrixFromAdjacencyMatrix(adjacencyMatrixFromList);
-            incidencyMatrixFromAdjacencyMatrix.print();
-            Draw(&incidencyMatrixFromAdjacencyMatrix);
+            IncidenceMatrix incidenceMatrixFromAdjacencyMatrix(adjacencyMatrixFromList);
+            incidenceMatrixFromAdjacencyMatrix.print();
+            Draw(&incidenceMatrixFromAdjacencyMatrix);
             break;
         }
         case 'I': {
-            IncidencyMatrix incidencyMatrix(file);
-            incidencyMatrix.print();
+            IncidenceMatrix IncidenceMatrix(file);
+            IncidenceMatrix.print();
             std::cout << "\nMacierz sąsiedztwa dla zadanej macierzy incydencji: " << std::endl;
-            AdjacencyMatrix adjacencyMatrixFromIncidencyMatrix(incidencyMatrix);
-            adjacencyMatrixFromIncidencyMatrix.print();
+            AdjacencyMatrix adjacencyMatrixFromIncidenceMatrix(IncidenceMatrix);
+            adjacencyMatrixFromIncidenceMatrix.print();
             std::cout << "\nLista sąsiedztwa dla zadanej macierzy incydencji: " << std::endl;
-            AdjacencyList adjacencyListFromIncidencyMatrix(adjacencyMatrixFromIncidencyMatrix);
+            AdjacencyList adjacencyListFromIncidencyMatrix(adjacencyMatrixFromIncidenceMatrix);
             adjacencyListFromIncidencyMatrix.print();
-            Draw(&incidencyMatrix);
+            Draw(&IncidenceMatrix);
             break;
         }
         case 'S': {
@@ -64,9 +63,9 @@ int main(void){
             AdjacencyList adjacencyListFromMartix(adjacencyMatrix);
             adjacencyListFromMartix.print();
             std::cout << "\nMacierz incydencji dla zadanej macierzy sąsiedztwa: " << std::endl;
-            IncidencyMatrix incidencyMatrixFromAdjacencyMatrix(adjacencyMatrix);
-            incidencyMatrixFromAdjacencyMatrix.print();
-            Draw(&incidencyMatrixFromAdjacencyMatrix);
+            IncidenceMatrix incidenceMatrixFromAdjacencyMatrix(adjacencyMatrix);
+            incidenceMatrixFromAdjacencyMatrix.print();
+            Draw(&incidenceMatrixFromAdjacencyMatrix);
             break;
         }
         case 'X': {
@@ -76,22 +75,22 @@ int main(void){
             AdjacencyList adjacencyListFromMartix(randomAdjacencyMatrix);
             adjacencyListFromMartix.print();
             std::cout << "\nMacierz incydencji dla zadanej macierzy sąsiedztwa: " << std::endl;
-            IncidencyMatrix incidencyMatrixFromAdjacencyMatrix(randomAdjacencyMatrix);
-            incidencyMatrixFromAdjacencyMatrix.print();
-            Draw(&incidencyMatrixFromAdjacencyMatrix);
+            IncidenceMatrix incidenceMatrixFromAdjacencyMatrix(randomAdjacencyMatrix);
+            incidenceMatrixFromAdjacencyMatrix.print();
+            Draw(&incidenceMatrixFromAdjacencyMatrix);
             break;
         }
 
         case 'P': {
-            AdjacencyMatrix randomAdjacencyMatrix(40, 1.);
+            AdjacencyMatrix randomAdjacencyMatrix(18, 0.3);
             randomAdjacencyMatrix.print();
             std::cout << "\nLista sąsiedztwa dla zadanej macierzy sąsiedztwa: " << std::endl;
             AdjacencyList adjacencyListFromMartix(randomAdjacencyMatrix);
             adjacencyListFromMartix.print();
             std::cout << "\nMacierz incydencji dla zadanej macierzy sąsiedztwa: " << std::endl;
-            IncidencyMatrix incidencyMatrixFromAdjacencyMatrix(randomAdjacencyMatrix);
-            incidencyMatrixFromAdjacencyMatrix.print();
-            Draw(&incidencyMatrixFromAdjacencyMatrix);
+            IncidenceMatrix incidenceMatrixFromAdjacencyMatrix(randomAdjacencyMatrix);
+            incidenceMatrixFromAdjacencyMatrix.print();
+            Draw(&incidenceMatrixFromAdjacencyMatrix);
             break;
         }
 
@@ -103,14 +102,10 @@ int main(void){
 }
 
 char readChar(std::fstream& file, int number){
-    //ustawiam wskaźnik seek na początek pliku
     file.seekg(std::ios::beg);
     for (int i = 0; i < number - 1; ++i){
-        //pierwszy argument fstream::ignore() to najdłuższy możliwy wiersz,
-        // drugi to znak nowej lini przy którym funkcja przechodzi do kolejnego wiersza
         file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
-    //tworzenie tymczasowej zmiennej i przypisanie jej wartości spod wskaźnika seek
     char letter;
     file >> letter;
     return letter;

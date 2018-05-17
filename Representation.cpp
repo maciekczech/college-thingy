@@ -5,14 +5,14 @@
 #include "Representation.h"
 
 
-void Representation::print(){
+/*void Representation::print(){
     for (int i = 0; i < this->m_size; i++){
         for (int j = 0; j < this->m_size; j++){
             std::cout << this->m_matrix[i][j] << " ";
         }
         std::cout << std::endl;
     }
-}
+}*/
 
 int Representation::getElement(int i, int j) const {
     if(m_matrix) return this->m_matrix[i][j];

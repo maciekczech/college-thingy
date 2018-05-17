@@ -5,15 +5,20 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include <cmath>
-#include "IncidencyMatrix.h"
+#include "IncidenceMatrix.h"
 #include "font.h"
 #include <string>
 
+/* 
+* This is only one header file that is responsible for visualising graph.
+* Could have seperate it into atleast two .h and .cpp files
+* But didn't feel like doing so :) 
+*/
+
 #define PI 3.14159265
 
-//Pierdolnałem tylko jeden header odpowiedzialny za rysowanie, najebane jak w cygańskim tobołku, ale działa.
 
-void Draw(IncidencyMatrix* matrix){
+void Draw(IncidenceMatrix* matrix){
 	const int radius = 40;	/*radius of a circle shaped node*/
     const int r = 320;		/*radius used to calcute posistions of a nodes, it is basically
     						*the distance between the center of a window and every single node*/

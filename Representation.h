@@ -10,28 +10,29 @@
 #include <limits>
 #include <sstream>
 
-//klasa bazowa zrobiona bardziej dla picu niż użyteczności.
-//z drugiej strony dzięki niej nie trzeba za każdym razem pisać setterów i getterów
-//jest git.
+
+/* 
+* Base class used to inherit setters and getters
+* perhaps I will use some polymorphism later on, who knows
+*/
 
 class Representation {
 public:
     Representation(){}
     virtual ~Representation(){}
 
-    /*settery*/
+    /*setters*/
     void setType(char type){m_type = type;}
     void setSize(int size){m_size = size;}
     void setElement(int i, int j, int element);
 
-    /*gettery*/
+    /*getters*/
     int** getMatrix(){return m_matrix;}
     char getType(){return m_type;}
     int getSize(){return m_size;}
     int getElement(int i, int j) const;
 
-    /*wypisuje macierz*/
-    virtual void print();
+    virtual void print() = 0;
 
 protected:
     int ** m_matrix;

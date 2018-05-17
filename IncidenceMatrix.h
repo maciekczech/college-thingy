@@ -11,17 +11,17 @@
 
 class AdjacencyMatrix;
 
-class IncidencyMatrix : public Representation{
+class IncidenceMatrix : public Representation{
 public:
-    IncidencyMatrix();
-    IncidencyMatrix(int verticies, int edges);
-    IncidencyMatrix(std::fstream& file);
-	IncidencyMatrix(const IncidencyMatrix& obj);
-    IncidencyMatrix(AdjacencyMatrix& adjacencyMatrix);
-    virtual ~IncidencyMatrix();
+    IncidenceMatrix();
+    IncidenceMatrix(int verticies, int edges);
+    IncidenceMatrix(std::fstream& file);
+	IncidenceMatrix(const IncidenceMatrix& obj);
+    IncidenceMatrix(AdjacencyMatrix& adjacencyMatrix);
+    virtual ~IncidenceMatrix();
 
-    //w sumie to okazal sie niepotrzebny, ale nie usuwam, bo moze kiedys sie przydać
-    IncidencyMatrix& operator=(IncidencyMatrix obj){
+    /* it turned out to be useless for now, but I left it here */
+    IncidenceMatrix& operator=(IncidenceMatrix obj){
 		std::cout << "Przypisane wierzcholki: " << m_verticies << std::endl;
 		std::cout << "Przypisane kraw: " << m_edges << std::endl;
 		this->setVerticies(obj.getVerticies());
