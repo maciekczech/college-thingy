@@ -1,0 +1,15 @@
+####### S - macierz sądziedztwa ####### I - macierz incydencji ####### L - lista sądziedztwa ####### X - losowanie  ####### P - losowanie na podstawie prawdopodobieństwa
+
+P - Litera decyduje o sposobie interpretacji poniższych danych
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+0 0 0 0 0 1 1;
+1 1 0 0 0 0 0;
+1 0 1 0 0 1 0;
+0 0 0 0 0 0 0;
+0 0 0 1 0 0 0;
+0 0 0 0 0 0 0;
+0 0 0 0 0 0 0;
+0 1 1 0 0 0 0;
+0 0 0 0 1 0 0;
+0 0 0 1 1 0 1;
